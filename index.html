@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Controle de Público - Feira Escolar</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ==============================
+         SIDEBAR
+    =============================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo-area">
+            <div class="logo-icon">
+                <span>F</span>
+            </div>
+
+            <div>
+                <h2>Feira Escolar</h2>
+                <span>Controle de Público</span>
+            </div>
+        </div>
+
+
+        <nav class="menu">
+
+            <button
+                class="menu-item active"
+                onclick="abrirPagina('dashboard', this)"
+            >
+                <span class="menu-icon">▦</span>
+                Dashboard
+            </button>
+
+
+            <button
+                class="menu-item"
+                onclick="abrirPagina('movimentacoes', this)"
+            >
+                <span class="menu-icon">☷</span>
+                Movimentações
+            </button>
+
+
+            <button
+                class="menu-item"
+                onclick="abrirPagina('arquivos', this)"
+            >
+                <span class="menu-icon">▣</span>
+                Períodos arquivados
+            </button>
+
+
+            <button
+                class="menu-item"
+                onclick="abrirPagina('configuracoes', this)"
+            >
+                <span class="menu-icon">⚙</span>
+                Configurações
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="status-sidebar">
+                <span class="status-dot"></span>
+
+                <div>
+                    <strong>Sistema offline</strong>
+                    <small>Dados salvos neste dispositivo</small>
+                </div>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ==============================
+         CONTEÚDO PRINCIPAL
+    =============================== -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+                <span class="topbar-label">Sistema de controle</span>
+
+                <h1 id="tituloPagina">
+                    Dashboard
+                </h1>
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="periodo-topo">
+                    <span>Período atual</span>
+
+                    <strong id="nomePeriodoAtual">
+                        Período atual
+                    </strong>
+                </div>
+
+
+                <div class="date-time">
+
+                    <strong id="dataAtual">
+                        --
+                    </strong>
+
+                    <span id="horaAtual">
+                        --
+                    </span>
+
+                </div>
+
+
+                <div class="offline-badge">
+                    <span></span>
+                    OFFLINE
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ==============================
+             DASHBOARD
+        =============================== -->
+
+        <section id="pagina-dashboard" class="page active">
+
+            <!-- EVENTO -->
+
+            <div class="event-banner">
+
+                <div>
+
+                    <span class="banner-tag">
+                        EVENTO ATIVO
+                    </span>
+
+                    <h2>
+                        Feira Escolar
+                    </h2>
+
+                    <p>
+                        Sistema de controle e contagem de público
+                    </p>
+
+                </div>
+
+
+                <div class="periodo-banner">
+
+                    <span>
+                        Período atual
+                    </span>
+
+                    <strong id="bannerPeriodo">
+                        Período atual
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CARDS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card green">
+
+                    <div class="stat-top">
+
+                        <span class="stat-title">
+                            Pessoas no local
+                        </span>
+
+                        <span class="stat-icon">
+                            👥
+                        </span>
+
+                    </div>
+
+                    <strong
+                        class="stat-number"
+                        id="pessoasPresentes"
+                    >
+                        0
+                    </strong>
+
+                    <span class="stat-description">
+                        Público presente agora
+                    </span>
+
+                </div>
+
+
+
+                <div class="stat-card blue">
+
+                    <div class="stat-top">
+
+                        <span class="stat-title">
+                            Entradas
+                        </span>
+
+                        <span class="stat-icon">
+                            ↗
+                        </span>
+
+                    </div>
+
+                    <strong
+                        class="stat-number"
+                        id="totalEntradas"
+                    >
+                        0
+                    </strong>
+
+                    <span class="stat-description">
+                        Entradas neste período
+                    </span>
+
+                </div>
+
+
+
+                <div class="stat-card orange">
+
+                    <div class="stat-top">
+
+                        <span class="stat-title">
+                            Saídas
+                        </span>
+
+                        <span class="stat-icon">
+                            ↙
+                        </span>
+
+                    </div>
+
+                    <strong
+                        class="stat-number"
+                        id="totalSaidas"
+                    >
+                        0
+                    </strong>
+
+                    <span class="stat-description">
+                        Saídas neste período
+                    </span>
+
+                </div>
+
+
+
+                <div class="stat-card purple">
+
+                    <div class="stat-top">
+
+                        <span class="stat-title">
+                            Maior público
+                        </span>
+
+                        <span class="stat-icon">
+                            ↑
+                        </span>
+
+                    </div>
+
+                    <strong
+                        class="stat-number"
+                        id="maiorPublico"
+                    >
+                        0
+                    </strong>
+
+                    <span class="stat-description">
+                        Pico de público no período
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- GRID PRINCIPAL -->
+
+            <div class="dashboard-grid">
+
+                <!-- GRÁFICO -->
+
+                <div class="panel chart-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Fluxo de público
+                            </h3>
+
+                            <p>
+                                Movimentação do período atual
+                            </p>
+
+                        </div>
+
+                        <div class="chart-legend">
+
+                            <span>
+                                <i class="legend-entry"></i>
+                                Entradas
+                            </span>
+
+                            <span>
+                                <i class="legend-exit"></i>
+                                Saídas
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-container">
+
+                        <canvas id="graficoMovimento"></canvas>
+
+                        <div
+                            id="graficoVazio"
+                            class="chart-empty"
+                        >
+                            <span>📊</span>
+
+                            <strong>
+                                Ainda não existem movimentações
+                            </strong>
+
+                            <small>
+                                Os dados aparecerão aqui conforme o público for registrado.
+                            </small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CONTROLE MANUAL -->
+
+                <div class="panel control-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Controle manual
+                            </h3>
+
+                            <p>
+                                Teste ou registre movimentações
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="arduino-status">
+
+                        <span
+                            id="arduinoIndicador"
+                            class="connection-dot offline"
+                        ></span>
+
+                        <div>
+
+                            <strong id="arduinoTexto">
+                                Arduino não conectado
+                            </strong>
+
+                            <small>
+                                Pronto para integração
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="manual-buttons">
+
+                        <button
+                            class="btn-entry"
+                            onclick="registrarEntrada()"
+                        >
+                            <span>↗</span>
+
+                            <div>
+                                <strong>
+                                    Registrar entrada
+                                </strong>
+
+                                <small>
+                                    +1 pessoa
+                                </small>
+                            </div>
+
+                        </button>
+
+
+                        <button
+                            class="btn-exit"
+                            onclick="registrarSaida()"
+                        >
+                            <span>↙</span>
+
+                            <div>
+                                <strong>
+                                    Registrar saída
+                                </strong>
+
+                                <small>
+                                    -1 pessoa
+                                </small>
+                            </div>
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="contador-controle">
+
+                        Pessoas no local:
+
+                        <strong id="contadorControle">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ÚLTIMAS MOVIMENTAÇÕES -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Últimas movimentações
+                        </h3>
+
+                        <p>
+                            Registros mais recentes deste período
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="btn-link"
+                        onclick="abrirPagina('movimentacoes', document.querySelectorAll('.menu-item')[1])"
+                    >
+                        Ver todas →
+                    </button>
+
+                </div>
+
+
+                <div id="ultimasMovimentacoes">
+
+                    <div class="empty-state">
+                        Nenhuma movimentação registrada.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ARQUIVAMENTO -->
+
+            <div class="archive-banner">
+
+                <div class="archive-icon">
+                    📦
+                </div>
+
+
+                <div class="archive-content">
+
+                    <strong>
+                        Encerrar este período?
+                    </strong>
+
+                    <p>
+                        Arquive o gráfico e todos os registros atuais para começar uma nova contagem do zero.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="btn-primary"
+                    onclick="abrirModalArquivamento()"
+                >
+                    Arquivar e iniciar novo
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==============================
+             MOVIMENTAÇÕES
+        =============================== -->
+
+        <section
+            id="pagina-movimentacoes"
+            class="page"
+        >
+
+            <div class="page-title">
+
+                <div>
+
+                    <span>
+                        Histórico
+                    </span>
+
+                    <h2>
+                        Movimentações
+                    </h2>
+
+                    <p>
+                        Registros do período atual.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="btn-primary"
+                    onclick="exportarCSV()"
+                >
+                    ↓ Exportar CSV
+                </button>
+
+            </div>
+
+
+
+            <div class="panel filters-panel">
+
+                <div class="filter-group">
+
+                    <label>
+                        Tipo
+                    </label>
+
+                    <select id="filtroTipo">
+                        <option value="TODOS">
+                            Todos
+                        </option>
+
+                        <option value="ENTRADA">
+                            Entradas
+                        </option>
+
+                        <option value="SAIDA">
+                            Saídas
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label>
+                        Data
+                    </label>
+
+                    <input
+                        type="date"
+                        id="filtroData"
+                    >
+
+                </div>
+
+
+                <button
+                    class="btn-secondary"
+                    onclick="limparFiltros()"
+                >
+                    Limpar filtros
+                </button>
+
+            </div>
+
+
+
+            <div class="panel table-panel">
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Data</th>
+                                <th>Horário</th>
+                                <th>Tipo</th>
+                                <th>Origem</th>
+                                <th>Público após evento</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tabelaMovimentacoes">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==============================
+             ARQUIVOS
+        =============================== -->
+
+        <section
+            id="pagina-arquivos"
+            class="page"
+        >
+
+            <div class="page-title">
+
+                <div>
+
+                    <span>
+                        Histórico
+                    </span>
+
+                    <h2>
+                        Períodos arquivados
+                    </h2>
+
+                    <p>
+                        Consulte gráficos e registros que foram arquivados.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div
+                id="listaPeriodosArquivados"
+                class="periodos-lista"
+            >
+
+                <div class="empty-periodos">
+
+                    <div>
+                        📦
+                    </div>
+
+                    <strong>
+                        Nenhum período arquivado
+                    </strong>
+
+                    <p>
+                        Quando você arquivar um período, ele aparecerá aqui.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==============================
+             CONFIGURAÇÕES
+        =============================== -->
+
+        <section
+            id="pagina-configuracoes"
+            class="page"
+        >
+
+            <div class="page-title">
+
+                <div>
+
+                    <span>
+                        Sistema
+                    </span>
+
+                    <h2>
+                        Configurações
+                    </h2>
+
+                    <p>
+                        Controle do sistema e preparação para o Arduino.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ARDUINO -->
+
+            <div class="settings-grid">
+
+                <div class="panel settings-card">
+
+                    <div class="settings-icon">
+                        🔌
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Integração Arduino
+                        </h3>
+
+                        <p>
+                            Esta versão funciona totalmente offline e já está preparada para receber os eventos enviados pelo Arduino.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="arduino-config-status"
+                        id="configStatusArduino"
+                    >
+                        ● Desconectado
+                    </div>
+
+
+                    <button
+                        class="btn-secondary"
+                        onclick="simularConexaoArduino()"
+                    >
+                        Testar conexão
+                    </button>
+
+                </div>
+
+
+
+                <!-- PERÍODO -->
+
+                <div class="panel settings-card">
+
+                    <div class="settings-icon">
+                        📦
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Controle de períodos
+                        </h3>
+
+                        <p>
+                            Arquive a contagem atual e comece uma nova sempre que precisar.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="btn-primary"
+                        onclick="abrirModalArquivamento()"
+                    >
+                        Arquivar período atual
+                    </button>
+
+                </div>
+
+
+
+                <!-- DADOS -->
+
+                <div class="panel settings-card danger-card">
+
+                    <div class="settings-icon">
+                        ⚠
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Apagar todos os dados
+                        </h3>
+
+                        <p>
+                            Remove o período atual e todos os períodos arquivados deste dispositivo.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="btn-danger"
+                        onclick="apagarDados()"
+                    >
+                        Apagar todos os dados
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- COMO FUNCIONA -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Integração futura com Arduino
+                        </h3>
+
+                        <p>
+                            Fluxo planejado para o sistema físico.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flow">
+
+                    <div class="flow-item">
+
+                        <span>
+                            1
+                        </span>
+
+                        <strong>
+                            Catraca / Sensor
+                        </strong>
+
+                        <small>
+                            Detecta a passagem
+                        </small>
+
+                    </div>
+
+
+                    <div class="flow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="flow-item">
+
+                        <span>
+                            2
+                        </span>
+
+                        <strong>
+                            Arduino
+                        </strong>
+
+                        <small>
+                            Identifica entrada ou saída
+                        </small>
+
+                    </div>
+
+
+                    <div class="flow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="flow-item">
+
+                        <span>
+                            3
+                        </span>
+
+                        <strong>
+                            Sistema
+                        </strong>
+
+                        <small>
+                            Registra o evento
+                        </small>
+
+                    </div>
+
+
+                    <div class="flow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="flow-item">
+
+                        <span>
+                            4
+                        </span>
+
+                        <strong>
+                            Dashboard
+                        </strong>
+
+                        <small>
+                            Atualiza os dados
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ==============================
+         MODAL ARQUIVAMENTO
+    =============================== -->
+
+    <div
+        id="modalArquivamento"
+        class="modal-overlay"
+    >
+
+        <div class="modal">
+
+            <button
+                class="modal-close"
+                onclick="fecharModalArquivamento()"
+            >
+                ×
+            </button>
+
+
+            <div class="modal-icon">
+                📦
+            </div>
+
+
+            <h2>
+                Arquivar período
+            </h2>
+
+
+            <p>
+                Os dados atuais serão guardados e uma nova contagem começará do zero.
+            </p>
+
+
+            <label for="nomePeriodoInput">
+                Nome do período
+            </label>
+
+
+            <input
+                id="nomePeriodoInput"
+                type="text"
+                placeholder="Ex.: Período 01"
+                maxlength="50"
+            >
+
+
+            <div class="modal-resumo">
+
+                <div>
+                    <span>Entradas</span>
+                    <strong id="modalEntradas">0</strong>
+                </div>
+
+                <div>
+                    <span>Saídas</span>
+                    <strong id="modalSaidas">0</strong>
+                </div>
+
+                <div>
+                    <span>Pico</span>
+                    <strong id="modalPico">0</strong>
+                </div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    class="btn-secondary"
+                    onclick="fecharModalArquivamento()"
+                >
+                    Cancelar
+                </button>
+
+
+                <button
+                    class="btn-primary"
+                    onclick="confirmarArquivamento()"
+                >
+                    Arquivar e zerar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==============================
+         MODAL PERÍODO ARQUIVADO
+    =============================== -->
+
+    <div
+        id="modalPeriodoArquivado"
+        class="modal-overlay"
+    >
+
+        <div class="modal modal-large">
+
+            <button
+                class="modal-close"
+                onclick="fecharModalPeriodoArquivado()"
+            >
+                ×
+            </button>
+
+
+            <div class="modal-icon">
+                📊
+            </div>
+
+
+            <h2 id="tituloPeriodoArquivado">
+                Período
+            </h2>
+
+
+            <p id="infoPeriodoArquivado">
+                Histórico do período
+            </p>
+
+
+            <div
+                id="statsPeriodoArquivado"
+                class="modal-resumo"
+            >
+            </div>
+
+
+            <div class="archive-chart-container">
+
+                <canvas
+                    id="graficoPeriodoArquivado"
+                ></canvas>
+
+            </div>
+
+
+            <div class="archive-records">
+
+                <div class="archive-record-header">
+
+                    <h3>
+                        Registros
+                    </h3>
+
+                    <button
+                        class="btn-secondary"
+                        id="btnExportarPeriodo"
+                    >
+                        Exportar CSV
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="registrosPeriodoArquivado"
+                    class="archive-record-list"
+                >
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==============================
+         TOAST
+    =============================== -->
+
+    <div
+        id="toast"
+        class="toast"
+    >
+
+        <div id="toastIcon">
+            ✓
+        </div>
+
+        <div>
+
+            <strong id="toastTitle">
+                Sucesso
+            </strong>
+
+            <p id="toastMessage">
+                Operação realizada.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
